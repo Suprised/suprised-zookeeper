@@ -12,13 +12,13 @@ import org.I0Itec.zkclient.ZkConnection;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 
 /**
- * zk客户端的一些基本的操作 
+ * zk客户端的一些基本的操作 (I0Itec)
  */
 public class ZKClient {
 
     public static void main(String[] args) {
         
-        ZkConnection zkConnection = new ZkConnection("192.168.1.109", 1000);
+        ZkConnection zkConnection = new ZkConnection("localhost", 3000);// 会话超时3s
         
         // 创建连接时可以增加watcher监控
         /*zkConnection.connect(new Watcher() {
@@ -30,7 +30,7 @@ public class ZKClient {
         });*/
         
         // ZKClient 是对zkconnection的代理，同时也是一个watcher，提供对应监听器来处理watcher相应的变化处理（IZkStateListener，IZkDataListener，_childListener）
-        ZkClient client = new ZkClient(zkConnection, 1000);
+        ZkClient client = new ZkClient(zkConnection, 3000);// 连接超时3s
         
         // 通过订阅节点，来处理节点变化
         client.subscribeDataChanges("/temp", new IZkDataListener() {
